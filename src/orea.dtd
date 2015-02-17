@@ -1,0 +1,29 @@
+<!ELEMENT orea ((population)*,(computationTime)+)> <!-- Wurzel     -->
+<!ELEMENT population (individuum*)>                <!-- Population -->
+<!ELEMENT individuum EMPTY>                        <!-- Individuum -->
+<!ELEMENT computationTime EMPTY>                   <!-- Rechenzeit -->
+
+<!ATTLIST individuum fitness  CDATA #REQUIRED> <!-- Fitness-Wert -->
+<!ATTLIST individuum genotype CDATA #REQUIRED> <!-- Genotyp      -->
+<!ATTLIST individuum size     CDATA #IMPLIED>  <!-- Groesse        -->
+
+<!-- Generation zu Zeitpunkt t -->
+<!ATTLIST population generation CDATA #REQUIRED>
+<!-- Anzahl der Individuuen -->
+<!ATTLIST population size       CDATA #REQUIRED>
+<!-- durchschnittl. Fitness -->
+<!ATTLIST population avgFitness CDATA #REQUIRED>
+<!-- empirische Varianz -->
+<!ATTLIST population sampleVariance CDATA #IMPLIED>
+<!-- Diversitaet der Population -->
+<!ATTLIST population diversity  CDATA #IMPLIED>
+<!-- Standardabweichung der Fitness -->
+<!ATTLIST population sampleMean CDATA #IMPLIED>
+<!-- Groesse des kleinsten Individuums -->
+<!ATTLIST population minSize    CDATA #IMPLIED>
+<!-- durchschnittl. Groesse der Individuen -->
+<!ATTLIST population avgSize    CDATA #IMPLIED>
+<!-- Groesse des groesstes Individuums -->
+<!ATTLIST population maxSize    CDATA #IMPLIED>
+
+<!ATTLIST computationTime seconds CDATA #REQUIRED> <!-- Rechenzeit (in Sek.) -->
