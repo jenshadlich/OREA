@@ -6,7 +6,7 @@ import qualified Util.Random as R
 import qualified Genetic.Selection.RandomIndividuum as RI
 
 import System.Random
-import List (sort, sortBy, nubBy)
+import Data.List (sort, sortBy, nubBy)
 import Control.Monad (forM)
 
 --------------------------------------------------------------------------------

@@ -4,7 +4,7 @@ module Genetic.Central (evolve) where
 import Genetic.Types
 import qualified Genetic.Selection.Parental as P
 import qualified Genetic.Selection.Environmental as E
-import List (sort)
+import Data.List (sort)
 import System.Random (Random)
 import qualified Util.Parallel as Parallel
 

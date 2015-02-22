@@ -5,7 +5,7 @@ import Genetic.Types
 import qualified Util.Random as R
 import qualified Genetic.Selection.RandomIndividuum as RI
 
-import List (sort)
+import Data.List (sort)
 import Control.Monad (forM)
 import System.Random (Random, randomRIO)
 
