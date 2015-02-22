@@ -7,9 +7,8 @@ import qualified Examples.BitStringImpl as BS
 import qualified Util.Time
    
 --------------------------------------------------------------------------------
--- | Beispielprogramm um einen Bitstring evolutionaer zu berechnen.
--- Dabei werden nur Terminale 0 und 1 als Buchstaben verwendet (keine Funktionen
--- im Genpool).
+-- | Example programm to find a bitstring by evolutionary algorithm.
+-- Uses only terminals '0' and '1' (no functions).
 main :: IO()
 main = do
     let config = Configuration {
@@ -23,7 +22,7 @@ main = do
         envSelection      = Best100,
         fDecode           = id,
         fFitness          = BS.evaluate,
-        fTracePop         = tracePrint, -- komplette Population ausgeben
+        fTracePop         = tracePrint, -- print entire population
         fGenerate         = (\s -> BS.generate s $ (length target) * 2),
         fMutate           = BS.mutate,
         fCrossover        = BS.crossover
