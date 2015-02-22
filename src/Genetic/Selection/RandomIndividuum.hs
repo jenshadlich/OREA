@@ -1,7 +1,7 @@
 
 module Genetic.Selection.RandomIndividuum where
 
-import Autolib.Util.Zufall (eins)
+import System.Random (randomRIO)
 import Genetic.Types
 
 --------------------------------------------------------------------------------
@@ -9,4 +9,8 @@ import Genetic.Types
 -- auswaehlen.
 randomIndividuum :: [Individuum gt f]
                  -> IO (Individuum gt f)
-randomIndividuum is = do i <- eins is; return i
+randomIndividuum is = do i <- pick is; return i
+
+--| pick a random element from a list
+pick :: [a] -> IO a
+pick xs = randomRIO (0, (length xs - 1)) >>= return . (xs !!)
