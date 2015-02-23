@@ -5,7 +5,7 @@ import Text.Printf
 import System.CPUTime
 
 --------------------------------------------------------------------------------
--- | Executes the given function and returns the execution time and the function's result
+-- | Executes the given function and returns the execution time it's result
 stopTime :: IO t -> IO (Double, t)
 stopTime exec = do
     start <- getCPUTime
