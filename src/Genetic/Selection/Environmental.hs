@@ -10,7 +10,7 @@ import Data.List (sort, sortBy, nubBy)
 import Control.Monad (forM)
 
 --------------------------------------------------------------------------------
--- | Bestenselektion
+-- | "best" selection strategy, 100%
 best100 :: (Ord f) => Population pt gt gp f 
         -> IO (Population pt gt gp f)
 best100 pop = return $
@@ -20,7 +20,7 @@ best100 pop = return $
         size = maxPopulationSize (config pop)
 
 --------------------------------------------------------------------------------
--- | Bestenselektion (Unikat)
+-- | modified "best" selection strategy, 100%, w/o duplicates
 best100Unique :: (Eq gt, Ord f) => Population pt gt gp f 
               -> IO (Population pt gt gp f)
 best100Unique pop = return $
@@ -30,8 +30,8 @@ best100Unique pop = return $
         size = maxPopulationSize (config pop)
 
 --------------------------------------------------------------------------------
--- | Selektion von 80 % der besten und 20 % aus dem Rest der Population
--- (experimentell)
+-- | modified "best" selection strategy, 80% best, 20% random
+-- (experimental)
 best80random20 :: (Ord f) => Population pt gt gp f 
                -> IO (Population pt gt gp f)
 best80random20 pop = do
@@ -51,10 +51,9 @@ best80random20 pop = do
                 rest = snd $ splitAt size80 (sort p) 
 
 --------------------------------------------------------------------------------
--- | Modifizerte q-stufige zweifache Turnierselektion (vgl. Weicker 2007, S.69).
--- Verwendet nur unikate Genotypen und setzt zufaelliger Offset fuer Anzahl
--- der Siege (doppelte Wertung einzelner Siege).
-nAryDoubleTournament :: (Eq gt, Ord f) => Population pt gt gp f -> Int 
+-- | Modified q-stage double tournament selection (see Weicker 2007, p 69).
+-- uses unique genotypes and a random offset for the number of victories (double counting of victories)
+nAryDoubleTournament :: (Eq gt, Ord f) => Population pt gt gp f -> Int
                      -> IO (Population pt gt gp f)
 nAryDoubleTournament pop n = do
     is' <- forM is runTournament
@@ -78,7 +77,7 @@ nAryDoubleTournament pop n = do
             return $ res + offset
 
 --------------------------------------------------------------------------------
--- | Mehrfaches Auftreten desselben Genotyps eliminieren.
+-- | Eliminate multiple occurances of the same genotype
 makeUnique :: (Eq gt) => [Individuum gt f]
            -> [Individuum gt f] 
 makeUnique = nubBy (\x y -> genotype x == genotype y )
