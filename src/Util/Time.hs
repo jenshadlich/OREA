@@ -5,8 +5,7 @@ import Text.Printf
 import System.CPUTime
 
 --------------------------------------------------------------------------------
--- | Fuehrt die uebergebene Funktion aus und stoppt die CPU-Zeit deren
--- Ausfuehrung.
+-- | Executes the given function and returns the execution time and the function's result
 stopTime :: IO t -> IO (Double, t)
 stopTime exec = do
     start <- getCPUTime
