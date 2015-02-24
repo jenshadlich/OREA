@@ -35,7 +35,7 @@ tracePrintStats :: (Floating f, PrintfArg f)
                 => Int -> Population pt gt gp f
                 -> IO ()
 tracePrintStats n pop = 
-    printf "%4d\tf_avg = %10.3f\tf_min = %8.1f\ts = %8.1f\n"
+    printf "%4d\tf_avg = %10.3f\tf_min = %8.3f\ts = %8.3f\n"
         n
         (A.averageFitness pop)
         (fitness $ head $ population pop)
