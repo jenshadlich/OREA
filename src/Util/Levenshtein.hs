@@ -4,7 +4,7 @@ module Util.Levenshtein where
 import Data.Array
 
 --------------------------------------------------------------------------------
--- | Levenshtein-Distanz (Editierabstand) berechnen.
+-- | Compute Levenshtein distance
 levenshtein :: (Eq a) => [a] -> [a] -> Int
 levenshtein s t = 
     -- d !! (length s) !! (length t) 
@@ -20,5 +20,4 @@ levenshtein s t =
                 a = d ! (i-1 , j) + 1
                 b = d ! (i, j-1) + 1
                 c = d ! (i-1, j-1) + cost
-                -- stattdessen listArray aus s und t
                 cost = if s !! (i-1) == t !! (j-1) then 0 else 1
