@@ -2,30 +2,29 @@
 module Examples.SymRegTypes where
 
 --------------------------------------------------------------------------------
--- | algebraischer Datentyp fuer Symbolische Regression mit einigen wichtigen
--- mathematischen Operationen
-data SRT = VarX          -- ^ Variable x
-         | Const Double  -- ^ Konstante
-         | Add   SRT SRT -- ^ Addition
-         | Sub   SRT SRT -- ^ Subtraktion
-         | Mul   SRT SRT -- ^ Multiplikation
-         | Div   SRT SRT -- ^ Division
-         | Sin   SRT     -- ^ Sinus
-         | Sqr   SRT     -- ^ Quadratzahl
-         | Sqrt  SRT     -- ^ Quadratwurzel
+-- | Algebraic data type for symbolic regression that defines the available functions
+data SRT = VarX          -- ^ variable x
+         | Const Double  -- ^ constante
+         | Add   SRT SRT -- ^ addition
+         | Sub   SRT SRT -- ^ subtraction
+         | Mul   SRT SRT -- ^ multiplication
+         | Div   SRT SRT -- ^ division
+         | Sin   SRT     -- ^ sin
+         | Sqr   SRT     -- ^ square
+         | Sqrt  SRT     -- ^ square root
          deriving (Eq)
 
 --------------------------------------------------------------------------------
--- | Kontext fuer SRT
+-- | context for SRT
 type CSRT = SRT -> SRT
 
 --------------------------------------------------------------------------------
--- | Instanz von Show um SRT in String umzuwandeln
+-- | toString instance
 instance Show SRT where
     show a = toString a
 
 --------------------------------------------------------------------------------
--- | SRT in String umwandeln
+-- | toString
 toString :: SRT
          -> String
 toString xs = 

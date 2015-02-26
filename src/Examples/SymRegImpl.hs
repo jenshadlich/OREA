@@ -6,7 +6,7 @@ import qualified Util.Random as R
 import Examples.SymRegTypes
 
 --------------------------------------------------------------------------------
--- | erzeugt einen zufaelligen SRT mit max. Tiefe von depth
+-- | Create a random SRT
 generate :: [Double] -> Genpool SRT -> Int
          -> IO (SRT)
 generate crange gp depth = do
@@ -16,7 +16,7 @@ generate crange gp depth = do
             case r of Fun1 op -> unary op; Fun2 op -> binary op
         else do
             b <- R.one [True, False]
-            r <- if b -- ^ Terminal (true) oder Konstante (false) verwenden
+            r <- if b -- ^ use terminal (true) or constant (false)
                 then R.one $ terminals gp 
                 else do c <- R.one crange; return $ Const c
             return r
@@ -30,9 +30,9 @@ generate crange gp depth = do
             return $ op a
 
 --------------------------------------------------------------------------------
--- | Einfache Fitness-Funktion fuer SRT: bewertet werden
--- 2-Norm des Fehlers der Funktionswerte und 
--- Laenge der Funktion (kurze Funktionen bevorzugt)
+-- | Fitness function
+-- compute the 2-norm of the error of the function values
+-- take length of SRT into account (shorter is better)
 evaluate :: [Double] -> Genpool SRT -> [Double] -> SRT
          -> Double
 evaluate xrange _ t i = (norm2 res) + (0.001 * fromIntegral (length $ show i)) 
@@ -43,7 +43,7 @@ evaluate xrange _ t i = (norm2 res) + (0.001 * fromIntegral (length $ show i))
         norm2 xs = sqrt $ sum (map abs xs)
 
 --------------------------------------------------------------------------------
--- | Baumtausch-Rekombination
+-- | Do a random tree recombination
 crossover :: SRT -> SRT
           -> IO ([SRT])
 crossover mom dad = do 
@@ -52,7 +52,7 @@ crossover mom dad = do
     return $ [cd m] ++ [cm d]
 
 --------------------------------------------------------------------------------
--- | Anker fuer Mutationen
+-- | Mutate
 mutate :: [Double] -> Genpool SRT -> SRT
        -> IO (SRT)
 mutate crange gp i = do
@@ -61,7 +61,7 @@ mutate crange gp i = do
     m crange gp i
 
 --------------------------------------------------------------------------------
--- | Zufallsbaum-Mutation
+-- | Random tree mutation
 subtreeN :: Int -> [Double] -> Genpool SRT -> SRT
          -> IO (SRT)
 subtreeN n crange gp i = do
@@ -70,26 +70,25 @@ subtreeN n crange gp i = do
     return $ c new 
 
 --------------------------------------------------------------------------------
--- | Interpreter fuer SRT: liefert fuer X-Wert den zugehoerigen Y-Wert zurueck
+-- | SRT interpreter
 eval :: Double -> SRT
      -> Double
 eval x xs = 
     case xs of 
-        Add   a b -> (eval x a) + (eval x b)            -- Addition
-        Sub   a b -> (eval x a) - (eval x b)            -- Subtraktion
-        Mul   a b -> (eval x a) * (eval x b)            -- Multiplikation
-        Div   a b -> do                                 -- sichere Division
+        Add   a b -> (eval x a) + (eval x b)
+        Sub   a b -> (eval x a) - (eval x b)
+        Mul   a b -> (eval x a) * (eval x b)
+        Div   a b -> do                                 -- safe division
             let a' = (eval x b)
             let b' = (eval x b)
-            if (abs b') <= 0.001 then a' else a' / b'   -- [PLM08], S. 156
-        Sin   a   -> sin (eval x a)                     -- Sinus
-        Sqr   a   -> a' * a' where a' = (eval x a)      -- Quadrat
-        Sqrt  a   -> sqrt (eval x a)                    -- Quadratwurzel
-        Const a   -> a                                  -- Konstante
-        VarX      -> x                                  -- Variable x
+            if (abs b') <= 0.001 then a' else a' / b'   -- [PLM08], p. 156
+        Sin   a   -> sin (eval x a)
+        Sqr   a   -> a' * a' where a' = (eval x a)
+        Sqrt  a   -> sqrt (eval x a)
+        Const a   -> a
+        VarX      -> x
 
 --------------------------------------------------------------------------------
--- | zufaelligen Teilbaum mit Kontext auswaehlen
 randomSubtree :: SRT
               -> IO (CSRT, SRT)
 randomSubtree t = do
@@ -97,7 +96,6 @@ randomSubtree t = do
     return rst
 
 --------------------------------------------------------------------------------
--- | alle Teilbaeume inkl. Kontext
 subtrees :: SRT
          -> [(CSRT, SRT)]
 subtrees rx = trav root  ++ [root]
