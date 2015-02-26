@@ -7,8 +7,9 @@ import qualified Examples.BitStringImpl as BS
 import qualified Util.Time
    
 --------------------------------------------------------------------------------
--- | Example programm to find a bitstring by evolutionary algorithm.
--- Uses only terminals '0' and '1' (no functions).
+-- | Genetic programming in action: find a (bit)string by evolution
+-- demo the principles of GP, the result is supposed to be identical with the target
+-- uses only terminals ("bits") '0' and '1' (no functions)
 main :: IO()
 main = do
     let config = Configuration {
