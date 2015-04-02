@@ -89,7 +89,7 @@ tournament is n
 
 --------------------------------------------------------------------------------
 -- | Lineare Variation. Entsprechend der Wahrscheinlichkeit wird fuer die
--- Population eine lineare Rekombination oder Mutation ausgefuehrt.
+-- gesamte Population eine lineare Rekombination oder Mutation ausgefuehrt.
 variateLinear :: Population pt gt gp f -> Double
               -> IO ([gt])
 variateLinear pop prop = do
